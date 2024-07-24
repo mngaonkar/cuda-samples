@@ -1,1 +1,1 @@
-nvcc -o <output file> <input file>
+`nvcc -o <output file> <input file>`
