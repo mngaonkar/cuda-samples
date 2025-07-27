@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 __global__ void kernel(float *data) {
-    // Simple kernel that does nothing
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     data[idx] = 0.13f;
 
@@ -17,6 +16,7 @@ int main() {
     cudaStreamCreate(&stream1);
     cudaStreamCreate(&stream2);
 
+    // kernel<<<grid dim, block dim, shared memory, stream>>>
     kernel<<<2, 512, 0, stream1>>>(d_data);
     cudaStreamSynchronize(stream1);
     cudaMemcpyAsync(h_data, d_data, 1024 * sizeof(float), cudaMemcpyDeviceToHost, stream2);
