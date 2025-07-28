@@ -24,11 +24,11 @@ int main() {
     cudaMemcpyAsync(d_data, h_data, 1024 * sizeof(float), cudaMemcpyHostToDevice, stream1);
     cudaEventRecord(start, stream1);
 
-    cudaStreamWaitEvent(stream2, start);
+    cudaStreamWaitEvent(stream2, start, 0);
     kernel<<<2, 512, 0, stream2>>>(d_data);
     cudaEventRecord(stop, stream2);
 
-    cudaStreamWaitEvent(stream1, stop);
+    cudaStreamWaitEvent(stream1, stop, 0);
     cudaMemcpyAsync(h_data, d_data, 1024 * sizeof(float), cudaMemcpyDeviceToHost, stream1);
 
     cudaStreamSynchronize(stream1);
